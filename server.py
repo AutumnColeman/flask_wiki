@@ -12,15 +12,24 @@ def main():
 @app.route('/<page_name>')
 def placeholder(page_name):
     query = db.query("select * from page where title = '%s'" % page_name)
-    page_content = query.namedresult()[0].page_content
-    
-    print page_content
+    result_list = query.namedresult()
+    if len(result_list) > 0:
+        print result_list
+        page_content = result_list[0].page_content
+        print page_content
 
-    return render_template(
-        'view.html',
-        page_name = page_name,
-        page_content = query.namedresult()[0].page_content
-    )
+        return render_template(
+            'view.html',
+            page_name = page_name,
+            page_content = query.namedresult()[0].page_content
+        )
+
+    else:
+        return render_template(
+            'placeholder.html',
+            page_name = page_name
+        )
+
 
 @app.route('/<page_name>/edit')
 def edit_page(page_name):
