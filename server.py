@@ -37,11 +37,22 @@ def placeholder(page_name):
 
 @app.route('/<page_name>/edit')
 def edit_page(page_name):
-
-    return render_template(
-        'edit.html',
-        page_name = page_name
-    )
+    # page_name = request.args.get('page_name')
+    query = db.query("select * from page where title = '%s'" % page_name)
+    result_list = query.namedresult()
+    if len(result_list) > 0:
+        page = result_list[0]
+        return render_template(
+            'edit.html',
+            page_name = page_name,
+            page_content=page.page_content
+            )
+    else:
+        return render_template(
+            'edit.html',
+            page_name=page_name
+        )
+        # page_content = query.namedresult()[0]
 
 @app.route('/<page_name>/save', methods=['POST'])
 def save_edit(page_name):
@@ -49,7 +60,13 @@ def save_edit(page_name):
     id = request.form.get('id')
     title = request.form.get('title')
     # action = action.form.get('action')
-    # query = db.query("select id from page where title = '%s'" % page_name)
+    query = db.query("select * from page where title = '%s'" % page_name)
+    if len(result_list) > 0:
+        id = result_list[0].id
+        db.update('page', {
+            'id': id,
+            'page_content': page_content
+        })
     # id = query.namedresult()[0].id
     #
     # print id

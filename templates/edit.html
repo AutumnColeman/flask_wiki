@@ -2,8 +2,7 @@
 {% block body %}
 <h1>Edit {{page_name}}</h1>
 <form action="/{{page_name}}/save" method="POST">
-  <textarea rows="4" cols="50" rows="8" name="page_content" placeholder="Enter text here" value="save">
- </textarea>
+  <textarea rows="4" cols="50" rows="8" name="page_content" placeholder="Enter text here" value="save">{{page_content}}</textarea>
 <button type="submit">Save Edit</button>
 
 </form>
