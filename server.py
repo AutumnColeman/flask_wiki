@@ -8,7 +8,7 @@ import pg, socket, markdown
 db = pg.DB(dbname='Wiki')
 app = Flask('Wiki')
 
-app.secret_key = 'password'
+app.secret_key = 'password' #I'm not an idiot, I just needed some key for it to work
 
 @app.route('/')
 def main():
