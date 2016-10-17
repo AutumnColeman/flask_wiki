@@ -16,7 +16,7 @@
       {% endif %}
     {% endwith %}
 
-    <p align=right>You are logged in as {{session['username'] or 'temporary user'}}. <a href="/logout">Logout.</a></p>
+    <p align=right>You are logged in as {{session['username'] or 'temporary user'}}. <a href="/logout">Logout</a></p>
     {% block body %}
 
     <h1>Wiki</h1>

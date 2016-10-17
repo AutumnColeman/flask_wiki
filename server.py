@@ -95,18 +95,23 @@ def edit_page(page_name):
     # page_name = request.args.get('page_name')
     query = db.query("select * from page where title = $1", page_name)
     result_list = query.namedresult()
-    if len(result_list) > 0:
-        page = result_list[0]
-        return render_template(
-            'edit.html',
-            page_name = page_name,
-            page_content=page.page_content
+    if 'username' in session:
+        if len(result_list) > 0:
+            page = result_list[0]
+            return render_template(
+                'edit.html',
+                page_name = page_name,
+                page_content=page.page_content
+                )
+        else:
+            return render_template(
+                'edit.html',
+                page_name=page_name
             )
     else:
-        return render_template(
-            'edit.html',
-            page_name=page_name
-        )
+        flash('You must be logged in to edit pages')
+        return redirect('/')
+
         # page_content = query.namedresult()[0]
 
 @app.route('/<page_name>/save', methods=['POST'])
