@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Wiki Signup</h1>
+<form action="/signup_save" method="POST">
+  Username:<br>
+   <input type="text" name="username">
+   <br>
+   Password:<br>
+   <input type="password" name="password">
+   <br><br>
+   <input type="submit" value="Submit">
+ </form>
+
+
+{% endblock %}
