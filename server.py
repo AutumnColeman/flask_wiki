@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from wiki_linkify import wiki_linkify
-import datetime
+from datetime import datetime
 
 import pg
 
@@ -71,6 +71,7 @@ def save_edit(page_name):
             'page_content': page_content,
             'last_modified_date': datetime.now() #why won't this work? check db type
         })
+
     else:
         db.insert(
              'page',
@@ -78,6 +79,7 @@ def save_edit(page_name):
              page_content=page_content
         )
     return redirect('/%s' % page_name)
+    print datetime.now()
 
     return "ok"
 if __name__ == '__main__':
