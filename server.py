@@ -1,12 +1,21 @@
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
 from flask import Flask, render_template, request, redirect, Markup, session, flash
 from wiki_linkify import wiki_linkify
 from datetime import datetime
 import pg, socket, markdown
+import os
 
 
-
-db = pg.DB(dbname='Wiki')
-app = Flask('Wiki')
+db = pg.DB(
+    dbname=os.environ.get('PG_DBNAME'),
+    host=os.environ.get('PG_HOST'),
+    user=os.environ.get('PG_USERNAME'),
+    passwd=os.environ.get('PG_PASSWORD')
+)
+tmp_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+app = Flask('Wiki', template_folder=tmp_dir)
 
 app.secret_key = 'password' #I'm not an idiot, I just needed some key for it to work
 
