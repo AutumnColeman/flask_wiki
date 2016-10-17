@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from wiki_linkify import wiki_linkify
+import datetime
 
 import pg
 
@@ -12,12 +13,13 @@ def main():
     return redirect('/HomePage')
 
 @app.route('/<page_name>')
-def placeholder(page_name):
-    query = db.query("select * from page where title = '%s'" % page_name)
+def view_page(page_name):
+    query = db.query("select * from page where title = $1", page_name)
     result_list = query.namedresult()
     if len(result_list) > 0:
         print result_list
         page_content = result_list[0].page_content
+        page_content = page_content.replace('<', '&lt;').replace('>', '&gt;')
         linkify_content = wiki_linkify(page_content)
         # print page_content
         print linkify_content
@@ -38,7 +40,7 @@ def placeholder(page_name):
 @app.route('/<page_name>/edit')
 def edit_page(page_name):
     # page_name = request.args.get('page_name')
-    query = db.query("select * from page where title = '%s'" % page_name)
+    query = db.query("select * from page where title = $1", page_name)
     result_list = query.namedresult()
     if len(result_list) > 0:
         page = result_list[0]
@@ -60,29 +62,21 @@ def save_edit(page_name):
     id = request.form.get('id')
     title = request.form.get('title')
     # action = action.form.get('action')
-    query = db.query("select * from page where title = '%s'" % page_name)
+    query = db.query("select * from page where title = $1", page_name)
+    result_list = query.namedresult()
     if len(result_list) > 0:
         id = result_list[0].id
         db.update('page', {
             'id': id,
-            'page_content': page_content
+            'page_content': page_content,
+            'last_modified_date': datetime.now() #why won't this work? check db type
         })
-    # id = query.namedresult()[0].id
-    #
-    # print id
-
-    # db.update(
-    #     'page', {
-    #     'id': id,
-    #     'title': page_name,
-    #     'page_content': page_content
-    # })
-
-    db.insert(
-         'page',
-         title=page_name,
-         page_content=page_content
-    )
+    else:
+        db.insert(
+             'page',
+             title=page_name,
+             page_content=page_content
+        )
     return redirect('/%s' % page_name)
 
     return "ok"
