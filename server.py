@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from wiki_linkify import wiki_linkify
 from datetime import datetime
-
 import pg
+import socket
 
 db = pg.DB(dbname='Wiki')
 app = Flask('Wiki')
@@ -69,7 +69,8 @@ def save_edit(page_name):
         db.update('page', {
             'id': id,
             'page_content': page_content,
-            'last_modified_date': datetime.now() #why won't this work? check db type
+            'last_modified_date': datetime.now(),
+            'author_name': socket.gethostbyname(socket.gethostname())
         })
 
     else:
