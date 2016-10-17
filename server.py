@@ -58,6 +58,11 @@ def save_sign_up():
 
     return redirect('/')
 
+@app.route ('/logout')
+def logout():
+    del session['username']
+
+    return redirect('/')
 
 @app.route('/<page_name>')
 def view_page(page_name):
