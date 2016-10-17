@@ -31,11 +31,10 @@ def submit_login():
             return render_template(
                 'index.html'
             )
-        else:
-            flash('Invalid username or password')
-            return redirect('/')
     else:
+        flash('Invalid username or password')
         return redirect('/')
+
 
 @app.route('/signup')
 def sign_up():
