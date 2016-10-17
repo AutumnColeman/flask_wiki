@@ -3,11 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>{{page_name}}</title>
+  </head>
   <body>
+    <!-- Display flashed messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
+    <p align=right>You are logged in as {{session['username']}}</p>
     {% block body %}
 
     <h1>Wiki</h1>
+
+
 
     {% endblock %}
   </body>
