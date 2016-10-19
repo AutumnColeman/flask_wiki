@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="login">
 <h1>Wiki Login {{page_name}}</h1>
 <form action="/submit_login" method="POST">
   Username:<br>
@@ -11,5 +12,5 @@
    <button type="submit" class="btn btn-default">Submit</button>
  </form><br>
  <a href="/signup">Sign up for an account</a>
-
+</div>
 {% endblock %}

@@ -1,4 +1,15 @@
 .logo {
   height: 50px;
   width: 50px;
+  margin-top: 4px;
+}
+
+.login, .signup {
+  text-align: center;
+  justify-content: center;
+  width: 400px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
