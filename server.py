@@ -44,6 +44,15 @@ def submit_login():
         flash('Invalid username or password')
         return redirect('/')
 
+@app.route('/view_all')
+def view_all():
+    query = db.query("select * from page order by title;")
+    all_entries = query.namedresult()
+
+    return render_template(
+        'view_all.html',
+        all_entries = all_entries
+    )
 
 @app.route('/signup')
 def sign_up():
