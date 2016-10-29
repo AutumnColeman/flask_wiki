@@ -32,7 +32,6 @@ def submit_login():
     password = request.form.get('password')
     query = db.query("select * from users where username = $1", username)
     result_list = query.namedresult()
-    # flash('$1, you have submitted your login information!', username)
     if len(result_list) > 0:
         user = result_list[0]
         if user.password == password:
@@ -96,7 +95,6 @@ def view_page(page_name):
         return render_template(
             'view.html',
             page_name = page_name,
-            # page_content = query.namedresult()[0].page_content,
             page_content = parsed_content
         )
 
@@ -109,7 +107,6 @@ def view_page(page_name):
 
 @app.route('/<page_name>/edit')
 def edit_page(page_name):
-    # page_name = request.args.get('page_name')
     query = db.query("select * from page where title = $1", page_name)
     result_list = query.namedresult()
     if 'username' in session:
@@ -129,7 +126,6 @@ def edit_page(page_name):
         flash('You must be logged in to edit pages')
         return redirect('/')
 
-        # page_content = query.namedresult()[0]
 
 @app.route('/<page_name>/save', methods=['POST'])
 def save_edit(page_name):

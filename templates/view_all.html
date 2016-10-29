@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<th>All Entries</th>
+<table>
+<tr>
+{% for entry in all_entries %}
+</tr>
+<tr>
+<td>{{entry.title}}</td>
+<td><a href="/{{entry.title}}">View Page</a></td>
+
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}
