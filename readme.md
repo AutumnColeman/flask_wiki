@@ -12,7 +12,7 @@ This is a 90s style, toy wiki.  It was built using Python, the Flask web applica
 * Creating and editing pages restricted to logged-in users
 * Flash messages 
 * Sign-up page
-New users register on the sign-up page with a username and password that is stored in the database.
+* Search function
 
 
 <img src="screenshots/wiki_database.png" alt="Database Example" width=600px /><br>
